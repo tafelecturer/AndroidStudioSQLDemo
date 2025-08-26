@@ -6,23 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-    <!-- Edit text to enter name -->
-<EditText
-android:id="@+id/etUserName"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_margin="10dp"
-android:hint="Enter User Name"
-android:textSize="20sp" />
-    <!-- Edit text to enter age -->
-<EditText
-android:id="@+id/etAge"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_margin="10dp"
-android:hint="Enter User Age"
-android:textSize="20sp" />
-    <!-- Button to add User -->
+
 <Button
 android:id="@+id/btnAddUser"
 android:layout_width="wrap_content"
