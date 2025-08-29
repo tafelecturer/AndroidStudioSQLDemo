@@ -34,7 +34,17 @@ android:layout_marginTop="10dp"
 android:text="Update User by Name"
 android:textSize="20sp" />
     <!-- Button to print Users -->
-<Button
+
+    <Button
+        android:id="@+id/btnPrintByAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Print Users by Age"
+        android:textSize="20sp" />
+
+    <Button
 android:id="@+id/btnPrintUsers"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
