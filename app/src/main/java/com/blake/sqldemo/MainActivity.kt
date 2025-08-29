@@ -14,6 +14,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
+
+    val db = DBHelper(this,null)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -29,14 +31,15 @@ class MainActivity : AppCompatActivity() {
             dialogBuilder.setView(dialogView)
             // Set a listener to each button that takes an action before dismissing the dialog
             // The dialog is automatically dismissed when a dialog button is clicked
+
             dialogBuilder.setPositiveButton("Yes",
                 DialogInterface.OnClickListener { dialog, id ->
                     // do this if "Yes" is clicked
-                    val db = DBHelper(this, null)
                     val etAddName = dialogView.findViewById<EditText>(R.id.etAddName)
                     val etAddAge = dialogView.findViewById<EditText>(R.id.etAddAge)
                     val name = etAddName.text.toString()
                     val age = etAddAge.text.toString()
+                    
                     //null check message
                     if (name == "" || age == "")
                     {
@@ -48,6 +51,9 @@ class MainActivity : AppCompatActivity() {
                         db.addUser(name, age)
                         Toast.makeText(this, "$name added to database", Toast.LENGTH_SHORT).show()
                     }
+                    db.addUser(name, age)
+                    Toast.makeText(this, "$name added to database", Toast.LENGTH_SHORT).show()
+
                 }
             )
             dialogBuilder.setNegativeButton("No",
@@ -61,10 +67,13 @@ class MainActivity : AppCompatActivity() {
 
         val btnPrintUsers = findViewById<Button>(R.id.btnPrintUsers)
         btnPrintUsers.setOnClickListener {
-            val db = DBHelper(this, null)
             val userList = db.getAllUsers()
             val tvUserRecord = findViewById<TextView>(R.id.tvUserRecord)
+
             tvUserRecord.text = "### Users ###\n"
+            if(userList.isEmpty()){
+                tvUserRecord.append("Database is empty\n please add users")
+            }
             userList.forEach { tvUserRecord.append("$it\n") }
         }
 
@@ -80,7 +89,6 @@ class MainActivity : AppCompatActivity() {
             dialogBuilder.setPositiveButton("Yes",
                 DialogInterface.OnClickListener { dialog, id ->
                     // do this if "Yes" is clicked
-                    val db = DBHelper(this, null)
                     val etDeleteName = dialogView.findViewById<EditText>(R.id.etDeleteName)
                     val name = etDeleteName.text.toString()
                     val rows = db.deleteUser(name)
@@ -116,7 +124,6 @@ class MainActivity : AppCompatActivity() {
                     "Yes",
             DialogInterface.OnClickListener { dialog, id ->
                 // do this if "Yes" is clicked
-                val db = DBHelper(this, null)
                 val etUpdateName = dialogView.findViewById<EditText>(R.id.etUpdateName)
                 val etUpdateAge = dialogView.findViewById<EditText>(R.id.etUpdateAge)
                 val name = etUpdateName.text.toString()
@@ -132,7 +139,6 @@ class MainActivity : AppCompatActivity() {
 
         val btnDeleteDB = findViewById<Button>(R.id.btnDeleteDB)
         btnDeleteDB.setOnClickListener {
-            val db = DBHelper(this, null)
             val isSuccessful = db.deleteDB()
             Toast.makeText(this,
                 when (isSuccessful) {
