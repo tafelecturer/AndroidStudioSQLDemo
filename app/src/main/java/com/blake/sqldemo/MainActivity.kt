@@ -39,11 +39,21 @@ class MainActivity : AppCompatActivity() {
                     val etAddAge = dialogView.findViewById<EditText>(R.id.etAddAge)
                     val name = etAddName.text.toString()
                     val age = etAddAge.text.toString()
-                    if(name == "" || age == "") {
-                        Toast.makeText(this, "Please enter both name and age", Toast.LENGTH_SHORT).show()
+                    
+                    //null check message
+                    if (name == "" || age == "")
+                    {
+                        Toast.makeText(this, "username or age cannot be blank here", Toast.LENGTH_SHORT).show()
+                    }
+
+                    else
+                    {
+                        db.addUser(name, age)
+                        Toast.makeText(this, "$name added to database", Toast.LENGTH_SHORT).show()
                     }
                     db.addUser(name, age)
                     Toast.makeText(this, "$name added to database", Toast.LENGTH_SHORT).show()
+
                 }
             )
             dialogBuilder.setNegativeButton("No",
