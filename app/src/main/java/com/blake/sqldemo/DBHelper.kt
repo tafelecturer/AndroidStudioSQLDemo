@@ -39,8 +39,11 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         // This ContentValues class is used to store a set of values
         val values = ContentValues()
         // insert key-value pairs
-        values.put(NAME, name)
-        values.put(AGE, age)
+        values.put(NAME, name.trimEnd())
+        values.put(AGE, age.trimEnd())
+        if(name == ""|| age == ""){
+            return
+        }
         // create a writable DB variable of our database to insert record
         val db = this.writableDatabase
         // insert all values into DB
@@ -55,6 +58,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         // read all records from DB and get the cursor
         val cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null)
         val userList = ArrayList<User>() // User ArrayList
+
         if (cursor.moveToFirst()) {
             do { // add all users to the list
                 userList.add(
@@ -69,14 +73,24 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         cursor.close()
         return userList
     }
+
     fun deleteUser(name: String): Int {
-        // create a writable DB variable of our database to delete record
-        val db = this.writableDatabase
-        // delete a user by NAME
-        val rows = db.delete(TABLE_NAME, "name=?", arrayOf(name))
-        db.close();
-        return rows // 0 or 1
+        var rows = 0
+        // Use the actual 'name' parameter, not DB_NAME
+        try {
+            val db = this.writableDatabase
+            rows = db.delete(
+                TABLE_NAME,
+                "LOWER(name) = LOWER(?)",
+                arrayOf(name.trim())
+            )
+            db.close()
+        }catch (e: Exception ){
+            e.printStackTrace()
+        }
+        return rows
     }
+
     fun updateUser(name: String, age: String): Int {
         // create a writable DB variable of our database to update record
         val db = this.writableDatabase
