@@ -4,9 +4,10 @@
     android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <EditText
         android:id="@+id/etAgeSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Name"/>
+        android:hint="Enter Age" />
 </LinearLayout>
